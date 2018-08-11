@@ -6,8 +6,9 @@
 package br.com.entra21java.dao;
 
 import br.com.entra21java.bean.AlunoBean;
-import br.com.entra21java.database.Conexao;
-import com.mysql.jdbc.PreparedStatement;
+import br.com.entra21java.database.ConexaoFactory;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,7 +25,7 @@ public class AlunoDao {
         List<AlunoBean> alunos = new ArrayList<>();
         String sql = "SELECT * FROM alunos_web";
         try {
-            Statement st = Conexao.obterConexao().createStatement();
+            Statement st = ConexaoFactory.obterConexao().createStatement();
             st.execute(sql);
             ResultSet resultSet = st.getResultSet();
             while (resultSet.next()) {
@@ -41,28 +42,75 @@ public class AlunoDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            Conexao.fecharConexao();
+            ConexaoFactory.fecharConexao();
         }
         return alunos;
     }
-    
-    public int adicionar(AlunoBean aluno){
+
+    public int adicionar(AlunoBean aluno) {
         String sql = "INSERT INTO  alunos_web (nome, matricula, nota1, nota2, nota3, frequencia) VALUES (?,?,?,?,?,?)";
-        try{
-            PreparedStatement ps = Conexao.obterConexao().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+        try {
+            PreparedStatement ps = ConexaoFactory.obterConexao().prepareStatement(sql, java.sql.PreparedStatement.RETURN_GENERATED_KEYS);
             int quantidade = 1;
             ps.setString(quantidade++, aluno.getNome());
             ps.setString(quantidade++, aluno.getMatricula());
             ps.setDouble(quantidade++, aluno.getNota1());
             ps.setDouble(quantidade++, aluno.getNota2());
             ps.setDouble(quantidade++, aluno.getNota3());
-            
-        }catch(SQLException e){
+            ps.setByte(quantidade++, aluno.getFrequencia());
+
+            ps.execute();
+            ResultSet resultSet = ps.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally{
-            Conexao.fecharConexao();
+        } finally {
+            ConexaoFactory.fecharConexao();
         }
         return -1;
+    }
+
+    public boolean alterar(AlunoBean aluno) {
+        Connection conexao = ConexaoFactory.obterConexao();
+        String sql = "UPDATE alunos_web SET nome = ?, matricula = ?, nota1 = ?, nota2 = ?, nota3 = ?, frequencia = ? WHERE id = ?";
+
+        try {
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setString(1, aluno.getNome());
+            ps.setString(2, aluno.getMatricula());
+            ps.setDouble(3, aluno.getNota1());
+            ps.setDouble(4, aluno.getNota2());
+            ps.setDouble(5, aluno.getNota3());
+            ps.setInt(6, aluno.getFrequencia());
+            return ps.executeUpdate() == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConexaoFactory.fecharConexao();
+        }
+
+        return false;
+    }
+
+    public boolean excluir(int id) {
+        Connection conexao = ConexaoFactory.obterConexao();
+        String sql = "DELETE FROM alunos_web WHERE id = ?";
+        if (conexao != null) {
+            try {
+                PreparedStatement ps = conexao.prepareStatement(sql);
+                ps.setInt(1, id);
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConexaoFactory.fecharConexao();
+            }
+        }
+        return false;
     }
 
 }

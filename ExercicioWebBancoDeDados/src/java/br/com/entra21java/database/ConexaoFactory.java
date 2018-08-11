@@ -12,7 +12,7 @@ import java.sql.DriverManager;
  *
  * @author Gus
  */
-public class Conexao {
+public class ConexaoFactory {
     private static final String HOST = "jdbc:mysql://localhost/exemplo_web_01";
     private static final String USER = "root";
     private static final String PASSWORD = "";
