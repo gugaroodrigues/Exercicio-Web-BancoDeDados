@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Gus/Documents/NetBeansProjects/Lista-Classe-get-set/ExercicioWebBancoDeDados/src/java/br/com/entra21java/dao/AlunoDao.java</file>
-            <file>file:/C:/Users/Gus/Documents/NetBeansProjects/Lista-Classe-get-set/ExercicioWebBancoDeDados/src/java/br/com/entra21java/database/EstruturaWeb.sql</file>
+            <file>file:/C:/Users/Gus/Documents/NetBeansProjects/Exercicio-Web-BancoDeDados/ExercicioWebBancoDeDados/web/alunos-cadastro.js</file>
+            <file>file:/C:/Users/Gus/Documents/NetBeansProjects/Exercicio-Web-BancoDeDados/ExercicioWebBancoDeDados/src/java/br/com/entra21java/web/alunos/AlunosIndex.java</file>
+            <file>file:/C:/Users/Gus/Documents/NetBeansProjects/Exercicio-Web-BancoDeDados/ExercicioWebBancoDeDados/src/java/br/com/entra21java/web/alunos/AlunoCadastrar.java</file>
         </group>
     </open-files>
 </project-private>

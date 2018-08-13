@@ -20,6 +20,11 @@ import java.util.List;
  * @author Gus
  */
 public class AlunoDao {
+    
+   /* public List<AlunoBean> validarCadastro(){
+        List<AlunoBean> alunos = new ArrayList<>();
+        String sql = "SELECT * FROM alunos_web WHERE nome = ?, senha = ?";
+    }*/
 
     public List<AlunoBean> obterTodos() {
         List<AlunoBean> alunos = new ArrayList<>();
@@ -97,19 +102,18 @@ public class AlunoDao {
     }
 
     public boolean excluir(int id) {
-        Connection conexao = ConexaoFactory.obterConexao();
         String sql = "DELETE FROM alunos_web WHERE id = ?";
-        if (conexao != null) {
+        
             try {
-                PreparedStatement ps = conexao.prepareStatement(sql);
+                PreparedStatement ps = ConexaoFactory.obterConexao().prepareStatement(sql);
                 ps.setInt(1, id);
                 return ps.executeUpdate() == 1;
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
                 ConexaoFactory.fecharConexao();
             }
-        }
         return false;
     }
 

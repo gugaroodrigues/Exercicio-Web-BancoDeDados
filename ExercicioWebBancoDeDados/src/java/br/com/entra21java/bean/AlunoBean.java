@@ -11,8 +11,24 @@ package br.com.entra21java.bean;
  */
 public class AlunoBean {
     private int id;
-    private String nome, matricula;
-    private double nota1, nota2, nota3;
+    private String nome, matricula, estado;
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    private double nota1, nota2, nota3, mediaNota;
+
+    public double getMediaNota() {
+        return mediaNota;
+    }
+
+    public void setMediaNota(double mediaNota) {
+        this.mediaNota = mediaNota;
+    }
     private byte frequencia;
 
     public int getId() {
